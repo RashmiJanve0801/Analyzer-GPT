@@ -1,0 +1,33 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Load the data from the CSV file
+try:
+    data = pd.read_csv("data.csv")
+except FileNotFoundError:
+    print("Error: The file 'data.csv' was not found.")
+    exit()
+
+# Count the number of survivors and deaths
+survived_count = data['Survived'].value_counts()
+
+# Create a bar graph
+plt.figure(figsize=(6, 4))
+plt.bar(survived_count.index, survived_count.values, color=['red', 'green'])
+plt.xlabel('Survived (0 = No, 1 = Yes)')
+plt.ylabel('Number of Passengers')
+plt.title('Survival Count')
+plt.xticks([0, 1])
+plt.grid(axis='y', linestyle='--')
+
+# Add the value on top of each bar
+for i, v in enumerate(survived_count.values):
+    plt.text(survived_count.index[i] - 0.05, v + 10, str(v), color='black')
+
+# Save the graph
+plt.savefig("output.png")
+
+# Show the graph (optional, for local execution)
+# plt.show()
+
+print("Graph 'output.png' created successfully.")

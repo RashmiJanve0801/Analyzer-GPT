@@ -1,0 +1,33 @@
+import pandas as pd
+
+try:
+    data = pd.read_csv("data.csv")
+except FileNotFoundError:
+    print("Error: data.csv not found.")
+    exit()
+
+# Print the column names to inspect the data
+print(data.columns)
+
+# Analyze survival rate by sex
+print("\nSurvival rate by sex:")
+print(data.groupby('Sex')['Survived'].mean())
+
+# Analyze survival rate by passenger class
+print("\nSurvival rate by passenger class:")
+print(data.groupby('Pclass')['Survived'].mean())
+
+# Analyze survival rate by age (create age groups)
+data['AgeGroup'] = pd.cut(data['Age'], bins=[0, 10, 20, 30, 40, 50, 60, 70, 80], labels=['0-10', '10-20', '20-30', '30-40', '40-50', '50-60', '60-70', '70-80'])
+print("\nSurvival rate by age group:")
+print(data.groupby('AgeGroup')['Survived'].mean())
+
+#Analyze survival rate by number of siblings/spouses aboard
+print("\nSurvival rate by number of siblings/spouses aboard:")
+print(data.groupby('SibSp')['Survived'].mean())
+
+#Analyze survival rate by number of parents/children aboard
+print("\nSurvival rate by number of parents/children aboard:")
+print(data.groupby('Parch')['Survived'].mean())
+
+print("\nAnalysis complete.")

@@ -1,0 +1,14 @@
+ipykernel
+python-dotenv
+autogen-agentchat
+autogen-ext[openai]
+autogen-ext[gemini]
+autogen-core
+pydantic
+autogen-ext[http-tool]
+autogen-ext[langchain]
+langchain-community
+autogenstudio
+playwright
+lmstudio
+streamlit

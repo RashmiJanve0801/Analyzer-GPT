@@ -1,0 +1,42 @@
+import pandas as pd
+import numpy as np
+
+# Load the dataset
+data = pd.read_csv("data.csv")
+
+# Fill missing 'Age' values with the median
+data['Age'] = data['Age'].fillna(data['Age'].median())
+
+# Fill missing 'Embarked' values with the mode
+data['Embarked'] = data['Embarked'].fillna(data['Embarked'].mode()[0])
+
+# Convert categorical variables to numerical
+data['Sex'] = data['Sex'].map({'female': 1, 'male': 0}).astype(int)
+data['Embarked'] = data['Embarked'].map({'S': 0, 'C': 1, 'Q': 2}).astype(int)
+
+# Calculate survival rate for different classes
+pclass_survival = data.groupby('Pclass')['Survived'].mean()
+print("Survival rate by Pclass:\n", pclass_survival)
+
+# Calculate survival rate for different sexes
+sex_survival = data.groupby('Sex')['Survived'].mean()
+print("\nSurvival rate by Sex:\n", sex_survival)
+
+# Calculate survival rate for different Embarked locations
+embarked_survival = data.groupby('Embarked')['Survived'].mean()
+print("\nSurvival rate by Embarked:\n", embarked_survival)
+
+# Survival rate by age
+age_groups = pd.cut(data["Age"], bins=[0, 12, 18, 60, 100], labels=["Child", "Teenager", "Adult", "Elderly"])
+age_survival = data.groupby(age_groups)['Survived'].mean()
+print("\nSurvival rate by Age Group:\n", age_survival)
+
+# Calculate survival rate for different SibSp
+sibsp_survival = data.groupby('SibSp')['Survived'].mean()
+print("\nSurvival rate by SibSp:\n", sibsp_survival)
+
+# Calculate survival rate for different Parch
+parch_survival = data.groupby('Parch')['Survived'].mean()
+print("\nSurvival rate by Parch:\n", parch_survival)
+
+print("Task completed: Survival analysis performed and key survival factors identified.")
